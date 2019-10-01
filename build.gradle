@@ -1,0 +1,26 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'groovy'
+    id 'com.gradle.plugin-publish' version '0.10.1'
+
+}
+
+group 'AtherysGradle'
+version '1.0'
+
+pluginBundle {
+    website = 'https://github.com/Atherys-Horizons'
+    vcsUrl = 'https://github.com/Atherys-Horizons/AtherysGradle'
+    tags = ['atherys', 'spongepowered', 'minecraft']
+}
+
+gradlePlugin {
+    plugins {
+        atherysPlugin {
+            id = 'com.atherys.gradle'
+            displayName = 'A\'therys Gradle Plugin'
+            description = 'Plugin for all A\'therys Sponge plugins'
+            implementationClass = 'com.atherys.gradle.AtherysPlugin'
+        }
+    }
+}
