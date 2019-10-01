@@ -16,8 +16,8 @@ class AtherysPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
 
-        project.tasks.create("atherysdoc", Javadoc.class, {
-
+        project.tasks.create("atherysdoc", Javadoc.class, { task ->
+            javadocTask(project, task)
         })
 
         RepositoryHandler repositories = project.getRepositories()
@@ -27,6 +27,10 @@ class AtherysPlugin implements Plugin<Project> {
                     name = "sponge"
                     url = "https://repo.spongepowered.org/maven"
                 },
+                repositories.maven {
+                    name = "jitpack"
+                    url = "https://jitpack.io"
+                }
         ])
     }
 
@@ -34,25 +38,25 @@ class AtherysPlugin implements Plugin<Project> {
         ConfigurationContainer configurations = project.getConfigurations();
         task.classpath = configurations.shadow + configurations.compile
 
-        SourceSetContainer sourceSets = (SourceSetContainer) (project.getProperties().get("sourceSets"))
+        def sourceSets = (SourceSetContainer) project.properties.get("sourceSets")
 
         task.source = sourceSets.main.allJava
 
-        StandardJavadocDocletOptions options = (StandardJavadocDocletOptions) task.getOptions()
+        def options = (StandardJavadocDocletOptions) task.getOptions()
 
         List<String> links = plugins.stream()
                 .map({ plugin -> "https://docs.atherys.com/javadocs/Atherys" + plugin + "/"})
                 .collect()
 
         links.addAll([
-                "http://www.slf4j.org/apidocs/",
+                "https://www.slf4j.org/apidocs/",
                 "https://google.github.io/guice/api-docs/4.1/javadoc/",
                 "https://google.github.io/guava/releases/21.0/api/docs/",
                 "https://docs.oracle.com/javase/8/docs/api/",
-                "http://jd.spongepowered.org/7.1.0/",
+                "https://jd.spongepowered.org/7.1.0/",
                 "https://docs.atherys.com/javadocs/AtherysCore/"
         ])
 
-        options.setLinks(links)
+        options.links = links
     }
 }
