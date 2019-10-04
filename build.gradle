@@ -5,8 +5,8 @@ plugins {
 
 }
 
-group 'AtherysGradle'
 version '1.0'
+group 'AtherysGradle'
 
 pluginBundle {
     website = 'https://github.com/Atherys-Horizons'
@@ -18,7 +18,6 @@ gradlePlugin {
     plugins {
         atherysPlugin {
             id = 'com.atherys.gradle'
-            displayName = 'A\'therys Gradle Plugin'
             description = 'Plugin for all A\'therys Sponge plugins'
             implementationClass = 'com.atherys.gradle.AtherysPlugin'
         }

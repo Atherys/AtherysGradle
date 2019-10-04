@@ -2,25 +2,21 @@ package com.atherys.gradle
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.ConfigurationContainer
-import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.api.tasks.javadoc.Javadoc
 import org.gradle.external.javadoc.StandardJavadocDocletOptions
 
 class AtherysPlugin implements Plugin<Project> {
-    private static final List<String> plugins = [
+    private static final def plugins = [
             "Core", "Quests", "RPG", "Towns", "Economy", "Script", "Parties", "Roleplay", "Skills"
     ]
 
     @Override
     void apply(Project project) {
+        project.plugins.apply("java")
+        project.plugins.apply("com.github.johnrengelman.shadow")
 
-        project.tasks.create("atherysdoc", Javadoc.class, { task ->
-            javadocTask(project, task)
-        })
-
-        RepositoryHandler repositories = project.getRepositories()
+        def repositories = project.getRepositories()
         repositories.add(repositories.mavenCentral())
         repositories.addAll([
                 repositories.maven {
@@ -32,15 +28,29 @@ class AtherysPlugin implements Plugin<Project> {
                     url = "https://jitpack.io"
                 }
         ])
+
+        def shadow = project.configurations["shadow"]
+        def deps = project.dependencies
+
+        shadow.dependencies.add(deps.create("org.spongepowered:spongeapi:7.1.0"))
+
+        if (project.name != "AtherysCore") {
+            shadow.dependencies.add(deps.create("com.github.Atherys-Horizons:AtherysCore:1.15.5"))
+        }
+
+        project.tasks.create("atherysdoc", Javadoc.class, { task ->
+            javadocTask(project, task)
+        })
     }
 
     private void javadocTask(Project project, Javadoc task) {
-        ConfigurationContainer configurations = project.getConfigurations();
-        task.classpath = configurations.shadow + configurations.compile
-
+        def configurations = project.getConfigurations();
         def sourceSets = (SourceSetContainer) project.properties.get("sourceSets")
 
+        task.classpath = configurations.shadow + configurations.compile
+        task.title = project.name
         task.source = sourceSets.main.allJava
+        task.group = "documentation"
 
         def options = (StandardJavadocDocletOptions) task.getOptions()
 
