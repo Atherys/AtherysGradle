@@ -14,7 +14,7 @@ class AtherysPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
         project.plugins.apply("java")
-        project.plugins.apply("com.github.johnrengelman.shadow")
+        project.apply { id "com.github.johnrengelman.shadow" version "2.0.2" }
 
         def repositories = project.getRepositories()
         repositories.add(repositories.mavenCentral())
