@@ -34,7 +34,7 @@ class AtherysPlugin implements Plugin<Project> {
         shadow.dependencies.add(deps.create("org.spongepowered:spongeapi:7.1.0"))
 
         if (project.name != "AtherysCore") {
-            shadow.dependencies.add(deps.create("com.github.Atherys-Horizons:AtherysCore:1.15.5"))
+            shadow.dependencies.add(deps.create("com.github.Atherys-Horizons:AtherysCore:1.15.6"))
         }
 
         project.tasks.create("atherysdoc", Javadoc.class, { task ->
@@ -67,5 +67,7 @@ class AtherysPlugin implements Plugin<Project> {
         ])
 
         options.links = links
+
+        options.addStringOption("-Xdoclint:none")
     }
 }
