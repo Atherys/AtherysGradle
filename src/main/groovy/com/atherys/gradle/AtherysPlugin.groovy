@@ -28,6 +28,10 @@ class AtherysPlugin implements Plugin<Project> {
                 }
         ])
 
+        project.tasks.getByName("shadowJar").configure {
+            classifier = ""
+        }
+
         def shadow = project.configurations["shadow"]
         def deps = project.dependencies
 
