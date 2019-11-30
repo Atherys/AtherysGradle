@@ -5,6 +5,7 @@ import org.gradle.api.Project
 import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.api.tasks.javadoc.Javadoc
 import org.gradle.external.javadoc.StandardJavadocDocletOptions
+import org.gradle.process.ProcessForkOptions
 import org.gradle.tooling.model.Task
 
 class AtherysPlugin implements Plugin<Project> {
@@ -22,9 +23,9 @@ class AtherysPlugin implements Plugin<Project> {
         int minorVersion = project.getVersion().getProperties().get("minor", 0);
         int patchVersion = project.getVersion().getProperties().get("patch", 0);
 
-        System.getenv().put("MAJOR_VERSION", majorVersion.toString())
-        System.getenv().put("MINOR_VERSION", minorVersion.toString())
-        System.getenv().put("PATCH", patchVersion.toString())
+        System.setProperty("MAJOR_VERSION", majorVersion.toString())
+        System.setProperty("MINOR_VERSION", minorVersion.toString())
+        System.setProperty("PATCH", patchVersion.toString())
 
         repositories.add(repositories.mavenCentral())
         repositories.addAll([
