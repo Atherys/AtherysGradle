@@ -5,10 +5,11 @@ import org.gradle.api.Project
 import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.api.tasks.javadoc.Javadoc
 import org.gradle.external.javadoc.StandardJavadocDocletOptions
+import org.gradle.tooling.model.Task
 
 class AtherysPlugin implements Plugin<Project> {
     private static final def plugins = [
-            "Core", "Quests", "RPG", "Towns", "Economy", "Script", "Parties", "Roleplay", "Skills"
+            "Core", "Quests", "RPG", "Towns", "Economy", "Script", "Parties", "Roleplay", "Skills", "Battlegrounds"
     ]
 
     @Override
@@ -16,6 +17,15 @@ class AtherysPlugin implements Plugin<Project> {
         project.plugins.apply("java")
 
         def repositories = project.getRepositories()
+
+        int majorVersion = project.getVersion().getProperties().get("major", 1);
+        int minorVersion = project.getVersion().getProperties().get("minor", 0);
+        int patchVersion = project.getVersion().getProperties().get("patch", 0);
+
+        System.getenv().put("MAJOR_VERSION", majorVersion.toString())
+        System.getenv().put("MINOR_VERSION", minorVersion.toString())
+        System.getenv().put("PATCH", patchVersion.toString())
+
         repositories.add(repositories.mavenCentral())
         repositories.addAll([
                 repositories.maven {
@@ -29,7 +39,7 @@ class AtherysPlugin implements Plugin<Project> {
         ])
 
         project.tasks.getByName("shadowJar").configure {
-            classifier = ""
+            classifier = "${majorVersion}.${minorVersion}.${patchVersion}"
         }
 
         def shadow = project.configurations["shadow"]
