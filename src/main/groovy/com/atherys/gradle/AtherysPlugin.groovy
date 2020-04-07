@@ -8,7 +8,7 @@ import org.gradle.external.javadoc.StandardJavadocDocletOptions
 
 class AtherysPlugin implements Plugin<Project> {
     private static final def plugins = [
-            "Core", "Quests", "RPG", "Towns", "Economy", "Script", "Parties", "Roleplay", "Skills"
+            "Core", "Quests", "RPG", "Towns", "Economy", "Script", "Parties", "Roleplay", "Skills", "Battlegrounds"
     ]
 
     @Override
@@ -35,10 +35,10 @@ class AtherysPlugin implements Plugin<Project> {
         def shadow = project.configurations["shadow"]
         def deps = project.dependencies
 
-        shadow.dependencies.add(deps.create("org.spongepowered:spongeapi:7.1.0"))
+        shadow.dependencies.add(deps.create("org.spongepowered:spongeapi:7.2.0"))
 
         if (project.name != "AtherysCore") {
-            shadow.dependencies.add(deps.create("com.github.Atherys-Horizons:AtherysCore:1.17.0"))
+            shadow.dependencies.add(deps.create("com.github.Atherys-Horizons:AtherysCore:1.18.6"))
         }
 
         project.tasks.create("atherysdoc", Javadoc.class, { task ->
