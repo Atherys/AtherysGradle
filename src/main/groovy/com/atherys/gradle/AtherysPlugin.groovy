@@ -19,16 +19,16 @@ class AtherysPlugin implements Plugin<Project> {
         repositories.add(repositories.mavenCentral())
         repositories.addAll([
                 repositories.maven {
+                    name = "atherys"
+                    url = "https://repo.atherys.com"
+                },
+                repositories.maven {
                     name = "sponge"
                     url = "https://repo.spongepowered.org/maven"
                 },
                 repositories.maven {
                     name = "jitpack"
                     url = "https://jitpack.io"
-                },
-                repositories.maven {
-                    name = "atherys"
-                    url = "https://repo.atherys.com"
                 }
         ])
 
