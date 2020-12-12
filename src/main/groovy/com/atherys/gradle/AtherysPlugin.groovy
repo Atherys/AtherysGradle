@@ -14,13 +14,24 @@ class AtherysPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
         project.plugins.apply("java")
+        project.plugins.apply("maven-publish")
+
+        def isProjectReleaseVersion = project.hasProperty("release");
+
+        if (!isProjectReleaseVersion) {
+            project.version += "-SNAPSHOT";
+        }
 
         def repositories = project.getRepositories()
         repositories.add(repositories.mavenCentral())
         repositories.addAll([
                 repositories.maven {
-                    name = "atherys"
-                    url = "https://repo.atherys.com"
+                    name = "atherys-releases"
+                    url = "https://repo.atherys.com/releases"
+                },
+                repositories.maven {
+                    name = "atherys-snapshots"
+                    url = "https://repo.atherys.com/snapshots"
                 },
                 repositories.maven {
                     name = "sponge"
