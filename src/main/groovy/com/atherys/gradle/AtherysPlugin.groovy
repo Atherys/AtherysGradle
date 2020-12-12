@@ -16,12 +16,6 @@ class AtherysPlugin implements Plugin<Project> {
         project.plugins.apply("java")
         project.plugins.apply("maven-publish")
 
-        def isProjectReleaseVersion = project.hasProperty("release");
-
-        if (!isProjectReleaseVersion) {
-            project.version += "-SNAPSHOT";
-        }
-
         def repositories = project.getRepositories()
         repositories.add(repositories.mavenCentral())
         repositories.addAll([
