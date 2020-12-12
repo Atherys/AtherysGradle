@@ -2,6 +2,8 @@ package com.atherys.gradle
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.repositories.PasswordCredentials
+import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.api.tasks.javadoc.Javadoc
 import org.gradle.external.javadoc.StandardJavadocDocletOptions
@@ -14,7 +16,6 @@ class AtherysPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
         project.plugins.apply("java")
-        project.plugins.apply("maven-publish")
 
         def repositories = project.getRepositories()
         repositories.add(repositories.mavenCentral())
