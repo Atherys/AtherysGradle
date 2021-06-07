@@ -48,7 +48,7 @@ class AtherysPlugin implements Plugin<Project> {
         shadow.dependencies.add(deps.create("org.spongepowered:spongeapi:7.3.0"))
 
         if (project.name != "AtherysCore") {
-            shadow.dependencies.add(deps.create("com.atherys:AtherysCore:2.0.0"))
+            shadow.dependencies.add(deps.create("com.atherys:AtherysCore:2.1.0"))
         }
 
         project.tasks.create("atherysdoc", Javadoc.class, { task ->
