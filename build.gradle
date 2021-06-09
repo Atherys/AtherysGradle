@@ -4,7 +4,7 @@ plugins {
     id 'com.gradle.plugin-publish' version '0.12.0'
 }
 
-version '1.7.2'
+version '1.7.4'
 group 'AtherysGradle'
 
 pluginBundle {
